@@ -8,8 +8,8 @@ The *Organization* account for this repo is STAT545-UBC:
 
 
 
-My participation repo for the course is here:
+My __participation repo__ for the course is here:
 [My participation repo](https://github.com/pennykahn/STAT545-participation)
 
 Which belongs to my _User_ account here:
-https://github.com/pennykahn
+[My User account](https://github.com/pennykahn)
