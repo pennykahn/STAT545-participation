@@ -1,0 +1,29 @@
+---
+title: "Tibble Exploration"
+author: "Penny Kahn"
+date: "September 10, 2019"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    theme: cosmo
+---
+<!-- echo=FALSE hides code in chunk from output-->
+```{r load packages, warning = FALSE, echo= FALSE}
+library(tibble)
+library(gapminder)
+library(DT)
+```
+
+## Print out datatable
+```{r}
+gapminder
+```
+
+<!--This is a comment that you cannot see in the HTML output-->
+## Viewing interactive datatables in output 
+Convert mtcars to tibble format, and wrap in datatable allowing it to be navigated in HTML output
+```{r}
+datatable(as_tibble(mtcars))
+```
+
