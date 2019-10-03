@@ -130,8 +130,8 @@ Instead of alpha transparency, suppose you're wanting to fix the overplotting is
 
 
 ```r
-ggplot(gapminder) +
-  geom_point(aes(gdpPercap, lifeExp, size = 0.1)) +
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(size = 0.1) +
   scale_x_log10(labels = scales::dollar_format())
 ```
 
@@ -157,7 +157,8 @@ tribble(
   4, 0.4, 0.5
 ) %>% 
   ggplot(aes(x, y)) + 
-  geom_line()
+  geom_path(arrow = arrow())+
+  geom_text(aes(label=time))
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
@@ -173,8 +174,8 @@ Fix the plot so that you can actually see the data points. Be sure to solve the 
 gapminder %>% 
   filter(continent == "Americas") %>% 
   ggplot(aes(country, lifeExp)) + 
-  geom_point() +
-  geom_boxplot()
+  geom_boxplot() +
+  geom_point()
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -186,10 +187,13 @@ We're starting with the same plot as above, but instead of the points + boxplot,
 
 ```r
 gapminder %>% 
-  filter(continent == "Americas") %>% 
-  ggplot(aes(country, lifeExp)) + 
-  geom_point() +
-  geom_boxplot()
+  filter(continent == "Americas") %>%
+  ggplot(aes(lifeExp, country)) + 
+  geom_density_ridges()
+```
+
+```
+## Picking joint bandwidth of 3.63
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
@@ -207,8 +211,9 @@ gapminder %>%
 ```r
 mtcars %>% 
   mutate(transmission = if_else(am == 0, "automatic", "manual")) %>% 
-  ggplot(aes(cyl)) +
-  geom_bar(aes(colour = transmission))
+  ggplot(aes(x=as.factor(cyl))) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill = transmission), position=position_dodge())+
+  labs(x="Cylinder number", y="Proportion", fill="Transmission")
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
@@ -237,12 +242,8 @@ Fix the following bar plot so that it shows these counts.
 
 
 ```r
-ggplot(hair, aes(Hair, n)) +
-  geom_bar()
-```
-
-```
-## Error: stat_count() must not be used with a y aesthetic.
+ggplot(hair, aes(x=Hair, y=n)) +
+  geom_col()
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
@@ -284,7 +285,7 @@ Fix the following plot so that it shows a filled-in square for each combination.
 
 ```r
 ggplot(hair_eye, aes(Hair, Eye)) +
-  geom_point(aes(colour = n))
+  geom_point(aes(colour = n), shape=15, size=10)
 ```
 
 ![](cm008_dplyr_part2_files/figure-html/unnamed-chunk-17-1.png)<!-- -->

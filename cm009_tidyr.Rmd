@@ -1,6 +1,8 @@
 ---
 title: "cm009 Exercises: tidy data"
-output: html_notebook
+output: 
+  html_document:
+    keep_md: TRUE
 editor_options: 
   chunk_output_type: inline
 ---
@@ -94,16 +96,16 @@ guest %>%
 ```{r}
 guest_long %>% 
   pivot_wider(id_cols     = c(party, name), 
-              names_from  = c("event", ), 
+              names_from  = event, 
               names_sep   = "_", 
-              values_from = c(meal, attendace))
+              values_from = c(meal, attendance))
 ```
 
 6. You also have a list of emails for each party, in this worksheet under the variable `email`. Change this so that each person gets their own row. Use `tidyr::separate_rows()`
 
 ```{r}
 email %>% 
-  separate_rows(FILL_THIS_IN, sep = FILL_THIS_IN)
+  separate_rows(guest, sep = ", ")
 ```
 
 
@@ -117,9 +119,9 @@ email %>%
 
 ```{r}
 n <- 100
-FILL_THIS_IN(label = FILL_THIS_IN,
-             FILL_THIS_IN = rnorm(n),
-             FILL_THIS_IN)
+tibble(label = "Sample A",
+             x = rnorm(n),
+             y = x + rnorm(n))
 ```
 
 
@@ -145,7 +147,6 @@ experiment <- tibble(
   measurement_1 = runif(6),
   measurement_2 = runif(6)
 )
-experiment %>% expand(name, trt, rep)
+experiment %>% complete(nesting(name, trt), rep)
 ```
 
-h

@@ -109,8 +109,8 @@ A list of shapes can be found [at the bottom of the `scale_shape` documentation]
 Instead of alpha transparency, suppose you're wanting to fix the overplotting issue by plotting small points. Why is this not working? Fix it.
 
 ```{r, fig.width = 5, fig.height = 2}
-ggplot(gapminder) +
-  geom_point(aes(gdpPercap, lifeExp, size = 0.1)) +
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(size = 0.1) +
   scale_x_log10(labels = scales::dollar_format())
 ```
 
@@ -133,7 +133,8 @@ tribble(
   4, 0.4, 0.5
 ) %>% 
   ggplot(aes(x, y)) + 
-  geom_line()
+  geom_path(arrow = arrow())+
+  geom_text(aes(label=time))
 ```
 
 ## Exercise 5: Life expectancies in Africa
@@ -146,20 +147,19 @@ Fix the plot so that you can actually see the data points. Be sure to solve the 
 gapminder %>% 
   filter(continent == "Americas") %>% 
   ggplot(aes(country, lifeExp)) + 
-  geom_point() +
-  geom_boxplot()
+  geom_boxplot() +
+  geom_point()
 ```
 
 ### 5(b) Ridgeplots
 
 We're starting with the same plot as above, but instead of the points + boxplot, try a ridge plot instead using `ggridges::geom_density_ridges()`, and adjust the `bandwidth`.
 
-```{r, fig.width = 5, fig.height = 2}
+```{r}
 gapminder %>% 
-  filter(continent == "Americas") %>% 
-  ggplot(aes(country, lifeExp)) + 
-  geom_point() +
-  geom_boxplot()
+  filter(continent == "Americas") %>%
+  ggplot(aes(lifeExp, country)) + 
+  geom_density_ridges()
 ```
 
 ## Exercise 6: Bar plot madness
@@ -174,8 +174,9 @@ gapminder %>%
 ```{r, fig.width = 5, fig.height = 2}
 mtcars %>% 
   mutate(transmission = if_else(am == 0, "automatic", "manual")) %>% 
-  ggplot(aes(cyl)) +
-  geom_bar(aes(colour = transmission))
+  ggplot(aes(x=as.factor(cyl))) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill = transmission), position=position_dodge())+
+  labs(x="Cylinder number", y="Proportion", fill="Transmission")
 ```
 
 ### 6(b) Bar heights already calculated
@@ -190,8 +191,8 @@ Here's the number of people having a certain hair colour from a sample of 592 pe
 Fix the following bar plot so that it shows these counts.
 
 ```{r}
-ggplot(hair, aes(Hair, n)) +
-  geom_bar()
+ggplot(hair, aes(x=Hair, y=n)) +
+  geom_col()
 ```
 
 ## Exercise 7: Tiling
@@ -207,7 +208,7 @@ Fix the following plot so that it shows a filled-in square for each combination.
 
 ```{r}
 ggplot(hair_eye, aes(Hair, Eye)) +
-  geom_point(aes(colour = n))
+  geom_point(aes(colour = n), shape=15, size=10)
 ```
 
 By the way, `geom_count()` is like `geom_bar()`: it counts the number of overlapping points.
