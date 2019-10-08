@@ -1,0 +1,62 @@
+---
+title: "Cm011: Reading and Writing Data"
+author: "Penny Kahn"
+output: 
+  html_document:
+    keep_md: TRUE
+---
+
+```{r}
+library(tidyverse)
+library(gapminder)
+library(here)
+library(readxl)
+```
+
+Loading in a file with url. If file was a csv, you can do it directly with read_csv, but since its an xcel file, you need to download it first
+```{r}
+data_url <- "http://gattonweb.uky.edu/sheather/book/docs/datasets/GreatestGivers.xls"
+
+download.file(url = data_url, destfile = here("test", "GreatestGivers.xls"))
+
+file_name <- basename(data_url)
+
+philanthropists <- read_excel(here("test", file_name), trim_ws =TRUE)
+
+philanthropists
+```
+
+```{r}
+data_url <- "https://github.com/STAT545-UBC-hw-2019-20/Announcements/files/3703782/Firas-MRI.xlsx"
+
+file_name <- basename(data_url)
+
+download.file(url = data_url, destfile = here("test", file_name))
+
+mri <- read_excel(here("test", file_name), trim_ws =TRUE, range = "A1:L12")
+
+mri
+```
+
+```{r}
+mri <- mri[, -10]
+
+mri
+```
+
+```{r}
+mri_long <- mri %>% 
+  pivot_longer(cols = `Slice 1`:`Slice 8`,
+               names_to = "slice_no",
+               values_to = "value")
+
+mri_long
+```
+
+
+
+
+
+
+
+
