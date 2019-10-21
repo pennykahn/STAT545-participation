@@ -18,3 +18,11 @@ In-class participation work from STAT545
 [cm009: Tidy data and pivoting](https://pennykahn.github.io/STAT545-participation/cm009_tidyr/cm009_tidyr.html)
 
 [cm010: Tibble joins](https://pennykahn.github.io/STAT545-participation/cm010_tibblejoins/cm010_tibblejoins.html)
+
+[cm011: File input/output (I/O)](https://pennykahn.github.io/STAT545-participation/cm011_loadingdata/cm011_loadingdata.html)
+
+[cm012: Working with factors in R](https://pennykahn.github.io/STAT545-participation/cm012_factors/cm012_factors.html)
+
+[cm013: Effective visualizations](https://pennykahn.github.io/STAT545-participation/cm013_visualization/cm013_visualization.html)
+
+[cm014: The model-fitting paradigm in R](https://pennykahn.github.io/STAT545-participation/cm014_modelfitting/cm014_modelfitting.html)
